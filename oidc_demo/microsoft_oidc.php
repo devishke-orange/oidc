@@ -21,18 +21,25 @@
  *
  */
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Jumbojett\OpenIDConnectClient;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $oidc = new OpenIDConnectClient(
-    'http://myproviderURL.com/',
-    'ClientIDHere',
-    'ClientSecretHere'
+    $_ENV['MICROSOFT_PROVIDER_URL'] . DIRECTORY_SEPARATOR . $_ENV['MICROSOFT_TENANT_ID'],
+    $_ENV['MICROSOFT_CLIENT_ID'],
+    $_ENV['MICROSOFT_CLIENT_SECRET']
 );
 
+$oidc->addScope(['email']);
+
+$oidc->setRedirectURL('https://4752-112-134-244-236.ngrok-free.app/oidc/oidc_demo/microsoft_oidc.php');
+
 $oidc->authenticate();
-$name = $oidc->requestUserInfo('given_name');
+$email = $oidc->requestUserInfo('email');
 
 ?>
 
@@ -47,9 +54,9 @@ $name = $oidc->requestUserInfo('given_name');
 </head>
 <body>
 
-    <div>
-        Hello <?php echo $name; ?>
-    </div>
+<div>
+    Hello <?php echo $email; ?>
+</div>
 
 </body>
 </html>

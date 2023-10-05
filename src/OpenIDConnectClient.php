@@ -646,6 +646,10 @@ class OpenIDConnectClient
         $this->wellKnownConfigParameters=$params;
     }
 
+    public function setWellKnown($params) {
+        $this->wellKnown = $params;
+    }
+
 
     /**
      * @param string $url Sets redirect URL for auth flow
