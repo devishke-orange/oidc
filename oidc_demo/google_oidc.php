@@ -36,7 +36,7 @@ $oidc = new OpenIDConnectClient(
 
 $oidc->addScope(['email']);
 
-$oidc->setRedirectURL('https://4752-112-134-244-236.ngrok-free.app/oidc/oidc_demo/google_oidc.php');
+$oidc->setRedirectURL($_ENV['REDIRECT_BASE_URI'] . 'google_oidc.php');
 
 $oidc->authenticate();
 $email = $oidc->requestUserInfo('email');
@@ -55,7 +55,7 @@ $email = $oidc->requestUserInfo('email');
 <body>
 
 <div>
-    Hello <?php echo $email; ?>
+    Email: <?php echo $email; ?>
 </div>
 
 </body>

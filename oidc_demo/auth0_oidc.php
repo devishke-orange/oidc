@@ -29,14 +29,14 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $oidc = new OpenIDConnectClient(
-    $_ENV['MICROSOFT_PROVIDER_URL'] . DIRECTORY_SEPARATOR . $_ENV['MICROSOFT_TENANT_ID'],
-    $_ENV['MICROSOFT_CLIENT_ID'],
-    $_ENV['MICROSOFT_CLIENT_SECRET']
+    $_ENV['AUTH0_PROVIDER_URL'],
+    $_ENV['AUTH0_CLIENT_ID'],
+    $_ENV['AUTH0_CLIENT_SECRET']
 );
 
 $oidc->addScope(['email']);
 
-$oidc->setRedirectURL($_ENV['REDIRECT_BASE_URI'] . 'microsoft_oidc.php');
+$oidc->setRedirectURL($_ENV['REDIRECT_BASE_URI'] . 'auth0_oidc.php');
 
 $oidc->authenticate();
 $email = $oidc->requestUserInfo('email');
